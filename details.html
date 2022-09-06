@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.google.com/specimen/Nunito+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</head>
+
+
+<body>
+    <header class="m-0 pt-2 shadow-sm position-fixed w-100 ">
+        <div class="d-flex justify-content-between container ">
+            <div class="elem1">Where in the world?</div>
+            <div class="elem2 pt-1" id="darkMode"><i class="fa-regular fa-moon"></i>Dark Mode</div>
+        </div>
+
+    </header>
+
+    <main class="container ">
+        <div class="mb-5 mt-5">
+            <a href="index.html"><button type="button" class="btn bg-white shadow-sm">
+                    <ion-icon class="me-1" name="arrow-back"></ion-icon>Back
+                </button></a>
+        </div>
+        <div id="maindiv">
+
+        </div>
+        <script>
+            let id = localStorage.getItem("id");
+            let filterCountry = JSON.parse(localStorage.getItem("filterCountry"));
+            console.log(filterCountry);
+
+            let currencies = [];
+            for (let i in filterCountry[id].currencies) {
+                currencies.push(filterCountry[id].currencies[i].name);
+            }
+            console.log(currencies);
+            let Languages = [];
+            for (let i in filterCountry[id].languages) {
+                Languages.push(filterCountry[id].languages[i]);
+                // currencies +=", ";
+            }
+            // };
+            console.log(Languages);
+            document.getElementById("maindiv").innerHTML = '<div class=" d-flex justify-content-between row gx-5">' +
+                '<div class="col-12 col-md-5">' +
+                '<img src="' + filterCountry[id].flags.svg + '" class="w-100">' +
+                '</div>' +
+                '<div class=" aligns-items-center  col ">' +
+                '<div class="country mb-3 pt-5">' +
+                filterCountry[id].name.common +
+                '</div>' +
+                '<div class="d-flex justify-content-between flex-md-row flex-sm-column ">' +
+                '<div class=" small">' +
+
+                '<div>' +
+                ' <div>' +
+                ' <div class="row-detail mb-2"><span class="property">Native Name:</span><span class="ps-1 value">' + filterCountry[id].name.official + '</span></div>' +
+                '<div class="row-detail mb-2"><span class="property">Population:</span><span' +
+                '       class="ps-1 value">' + filterCountry[id].population + '</span></div>' +
+                '<div class="row-detail mb-2"><span class="property">Region:</span><span' +
+                '       class="ps-1 value">' + filterCountry[id].region + '</span></div>' +
+                '</div>' +
+                '<div class="row-detail mb-2"><span class="property">Capital:</span><span' +
+                'class="ps-1 value">' + filterCountry[id].capital + '</span></div>' +
+                '<div class="row-detail mb-2"><span class="property">Sub Region:</span><span' +
+                'class="ps-1 value">' + filterCountry[id].subregion + '</span></div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="mt-sm-4">' +
+                '<div>' +
+                '<div class="row-detail mb-2"><span class="property">Top Level Domain:</span><span' +
+                'class="ps-1 value">' + ' ' + filterCountry[id].tld + '</span></div>' +
+                '<div class="row-detail mb-2"><span class="property">Currencies:</span><span' +
+                'class="ps-1 value">' + ' ' + currencies.toString() + '</span></div>' +
+                '<div class="row-detail mb-2"><span class="property">Languages:</span><span' +
+                'class="ps-1 value">' + ' ' + Languages.toString() + '</span></div>' +
+                '</div>' +
+
+                '</div>' +
+
+                '</div>' +
+                '<div class=" mt-4 ">' +
+                '<div class="d-inline-block property me-3">Border Countries: </div>' +
+                '<div class="d-inline-block  buttons">' +
+                '<button type="button" class="btn bg-white shadow-sm"> France </button>' +
+                '<button type="button" class="btn bg-white shadow-sm"> Germany </button>' +
+                '<button type="button" class="btn bg-white shadow-sm">NetherLands </button>' +
+
+                '</div>' +
+                '</div>' +
+
+                '</div>' +
+
+                '</div>';
+
+            let darkMode = document.getElementById("darkMode");
+            darkMode.onclick = function () {
+                document.body.classList.toggle("dark-mode");
+            }
+
+            // alert(id);
+        </script>
+        <div>
+
+        </div>
+        </div>
+        </div>
+    </main>
+
+</body>
