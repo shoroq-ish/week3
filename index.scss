@@ -72,6 +72,9 @@ header{
 
 }
 
+#dropdownMenuButton1{
+    display: inline-block;
+}
 main{
     padding-top: 80px;
 }
@@ -83,7 +86,7 @@ main{
 input{
     background-color: var(--secondary-color);
     color: var(--text-color);
-    
+
     padding-left: 60px;
 }
 .fa-magnifying-glass{
@@ -109,7 +112,7 @@ li{
     font-family: Nunito Sans ;
 }
 .main-div{
-    
+
     // gap:10px
 }
 .details-div{
@@ -139,65 +142,65 @@ img {
     // width: 100%;
     object-fit: cover;}
 
-    @media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
 
-        /* For mobile phones: */
-        [class*="div2"] {
-            flex-direction: column;
-            row-gap: 30px;
-            
-        }
-        [class*= "drop"]{
-                margin-right: auto;
-        }
+    /* For mobile phones: */
+    [class*="div2"] {
+        flex-direction: column;
+        row-gap: 30px;
+
     }
-
-    @media only screen and (max-width: 768px) {
-
-        /* ask about this line*/
-        /* For mobile phones: */
-        [class*="Search"] {
-            width: 80%;
-            display: block;
-        }
+    [class*= "drop"]{
+        margin-right: auto;
     }
-    @media only screen and (min-width: 1580px) {
+}
 
-        /* ask about this line*/
-        /* For mobile phones: */
-        // [class*="main-div"] {
-        //     gap: 130px;
-        // }
-        // [class*="details-div"] {
-        //     width: 350px;
-        // }
-        img{
-            height: 200px;
-        }
+@media only screen and (max-width: 768px) {
+
+    /* ask about this line*/
+    /* For mobile phones: */
+    [class*="Search"] {
+        width: 80%;
+        display: block;
     }
-    a:link {
-        text-decoration: none;
-        color: black;
+}
+@media only screen and (min-width: 1580px) {
+
+    /* ask about this line*/
+    /* For mobile phones: */
+    // [class*="main-div"] {
+    //     gap: 130px;
+    // }
+    // [class*="details-div"] {
+    //     width: 350px;
+    // }
+    img{
+        height: 200px;
     }
+}
+a:link {
+    text-decoration: none;
+    color: black;
+}
 
 
-    a:visited {
-        text-decoration: none;
-        color: black;
-    }
+a:visited {
+    text-decoration: none;
+    color: black;
+}
 
 
-    a:hover {
-        text-decoration: none;
-        color: black;
-    }
+a:hover {
+    text-decoration: none;
+    color: black;
+}
 
 
-    a:active {
-        text-decoration: none;
-        color: black;
-    }
+a:active {
+    text-decoration: none;
+    color: black;
+}
 
-    a{
-        display: inline-block;
-    }
+a{
+    display: inline-block;
+}

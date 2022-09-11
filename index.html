@@ -32,11 +32,11 @@
         </div>
         <div class="drop dropdown ">
             <button class=" small shadow-sm  rounded pe-3  ps-3  pt-3 pb-3  border-0 dropdown-toggle " type="button"
-                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Filter by Region
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                <div id="dropdownMenuButton1">Filter by Region</div>
                 <i class="fa-solid fa-angle-down ps-5"></i>
             </button>
-            <ul id="continents" class=" shadow-sm dropdown-menu w-100 border-0 dropdown-list"
+            <ul id="regions" class=" shadow-sm dropdown-menu w-100 border-0 dropdown-list"
                 aria-labelledby="dropdownMenuButton1">
 
             </ul>
@@ -44,72 +44,90 @@
 
     </div>
     <div>
-        <div class=" row  gy-5 gx-5  mt-5 px-sm-5 px-md-0" id="shorouq"></div>
+
+        <div class=" row  gy-5 gx-5  mt-5 px-sm-5 px-md-0" id="cards">
+
+
+        </div>
     </div>
     <script>
 
-        let allData = [];
-        let filterFlag = 0;
-        let filtertext = "";
-        let searchvalue = "";
+
+        let searchData = init("all");
 
 
-        getData();
-        const search = document.getElementById("search");
-        search.addEventListener("input", (e) => {
-            let filterCountry = [];
-            searchvalue = e.target.value;
-            console.log("event listener");
-
-            if(allData.length == 0){
-                setTimeout(function(){
-                    filterCountry= searchForCountries();
-                    showData(filterCountry);
-                },2000);}
-            else{
-                filterCountry= searchForCountries();
-                showData(filterCountry);
+        async function init(name){
+            let countries = await getData(name);
+            if(countries.status == "404"){
+                showNotFoundData();
+            }else{
+                let viewData = prepareData(countries);
+                showData(viewData);
             }
 
+            return countries;
+        }
 
+        function showNotFoundData(){
+            document.getElementById("cards").innerHTML = "Not Found";
+        }
+
+        function showData(viewData){
+            document.getElementById("cards").innerHTML = viewData;
+        }
+
+        function search() {
+            let search = document.getElementById("search");
+            return search;
+        }
+
+        search().addEventListener("input", (e) =>{
+            let filterCountry = [];
+            searchvalue = e.target.value;
+
+            name = "name/"+searchvalue;
+            if(searchvalue == ""){
+                name = "all";
+            }
+
+            searchData = init(name);
+            let filterText=getFilterData();
+            if( filterText != ""){
+                searchForCountries();
+            }
         });
 
-        function searchForCountries(){
-            console.log("searchForCountries");
-            console.log(allData);
-            filterCountry = allData.filter((country) => {
-                if(filtertext != "all" ){
-                    return country.name.common.toLowerCase().includes(searchvalue)
-                        && country.region.includes(filtertext);
-                }
-                else{
-                    return country.name.common.toLowerCase().includes(searchvalue);
-                }
+        function getFilterData (){
+            let filterText = document.getElementById("dropdownMenuButton1").innerHTML;
+            if(filterText == "Filter by Region" || filterText == "all"){
+                filterText ="";
+            }
+            return filterText;
+        }
+        async function searchForCountries(){
+            let searchvalue = search().value;
+            let allD = [];
+            let filterText=getFilterData();
+            allD = await new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(searchData);
+                }, 2000);
             });
-            return filterCountry;
 
+            filterCountry = allD.filter((country) => {
+                return country.region.includes(filterText);
+            });
+            let viewData =  prepareData(filterCountry);
+            showData(viewData);
         }
 
-
-
-
-
-        function getData() {
-            fetch('https://restcountries.com/v3.1/all')
-                .then((response) => response.json())
-                .then((data) => {
-                        allData = data;
-                        let key = 0;
-                        showData(data);
-                    }
-                );
-            console.log(allData);
+        function getData(name) {
+            return fetch('https://restcountries.com/v3.1/'+name)
+                .then((response) => response.json());
         }
 
-        function showData(data){
-
-            console.log(data);
-            const htmlString = data
+        function prepareData(data){
+            return htmlString = data
                 .map((country) => {
                     let countryName = country.name.common;
                     return `<div class="col-12 col-md-4 col-lg-3">
@@ -128,31 +146,21 @@
                                                 <span class="ps-1 value">` + country.capital + `</span></div>
                                     </div></div></div></div></a></div>`;
                 }).join('');
-            document.getElementById("shorouq").innerHTML = htmlString;
+
         }
 
-
-
-        console.log(allData);
-
-        //filter drop down list
-        function filter(obj) {
+        async function filterByRegion(region) {
             let filterCountry = [];
-            filterFlag = 1;
-            filtertext = obj.textContent;
-            console.log(filtertext);
-            if (filtertext == "all") {
-                filterFlag = "all";
-            }
-            filterCountry= searchForCountries();
-            showData(filterCountry);
+            filtertext = region.textContent;
+            document.getElementById("dropdownMenuButton1").innerHTML =filtertext;
+            searchForCountries();
         }
 
 
-        let continents = ["Africa", "America", "Asia", "Europe", "Oceania", "all"];
-        for (let continent of continents) {
-            document.getElementById("continents").innerHTML +=
-                '<li class="dropdown-item small" ><a href="#" onclick="filter(this)">' + continent + '</a></li>';
+        let regions = ["Africa", "America", "Asia", "Europe", "Oceania", "all"];
+        for (let region of regions) {
+            document.getElementById("regions").innerHTML +=
+                '<li class="dropdown-item small" ><a href="#" onclick="filterByRegion(this)">' + region + '</a></li>';
         }
 
 
